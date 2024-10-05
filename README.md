@@ -20,8 +20,9 @@ To use this project, follow these steps:
     cd ../number-to-french
 
 3. Run the Python script to convert numbers:
-    python -m number_to_french <list_of_numbers>
+    python -m number_to_french [list_of_numbers]
 
 ## Disclaimer about LLM usage
 1. I have Copilot installed on my PC, so after I created a structure of the algorithm in converter.py, I could let Copilot fill the methods.
-2. To create README file, I prompted ChatGPT: create a README file for a packaged application containing this script [contents of number_to_french/converter.py]. I did an analogous thing for setup.py adn tests/tests_converter.py.
+2. To create README file, I prompted ChatGPT: create a README file for a packaged application containing this script [contents of number_to_french/converter.py]. I did an analogous thing for setup.py and tests/tests_converter.py.
+3. To create docstrings for NumberToFrench inside number_to_french/converter.py and main in number_to_french/__main__.py, I used a prompt "create a docstring for this. Be concise: [script]"

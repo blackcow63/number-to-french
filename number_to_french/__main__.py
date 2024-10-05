@@ -3,6 +3,13 @@ import ast  # To safely evaluate a string as a Python literal
 from .converter import NumberToFrench
 
 def main():
+
+    """
+    A command-line tool for converting a list of integers into their French word equivalents.
+    Takes a list of integers as a string input, processes it with NumberToFrench, and outputs the results.
+    Usage: python -m number_to_french '[1, 2, 3]'
+    """
+
     if len(sys.argv) > 1:
         try:
             # Extract the input argument, which should be a list in string format

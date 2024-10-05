@@ -1,6 +1,13 @@
 from typing import List
 
 class NumberToFrench:
+
+    """
+    A class to convert integers to their French word equivalents. 
+    Supports conversion of individual numbers, 
+    handling numbers up to billions with proper French grammar.
+    """
+     
     def __init__(self, number: int = None):
         self.number = number
 
@@ -45,7 +52,7 @@ class NumberToFrench:
         
 
     def get_hundreds_name(self, hundreds_digit: int, tens_digit: int, units_digit: int) -> str:
-        """Converts a hundreds digit to its French word equivalent using tens and units digits as well."""
+        """Gets a right hundreds suffix (cent/cents)"""
         if hundreds_digit == 0:
             return ""
         if hundreds_digit == 1:
