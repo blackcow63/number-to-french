@@ -6,13 +6,13 @@ class NumberToFrench:
 
     def split_into_triplets(self, number: int) -> List[str]:
         """Splits the number into groups of three digits, from right to left."""
-        x = str(number)
-        return x
+        number_str = str(number).zfill(((len(str(number)) + 2) // 3) * 3)
+        return [number_str[i:i + 3] for i in range(0, len(number_str), 3)]
 
     def convert_triplet_to_french(self, triplet: str) -> str:
         """Converts a 3-digit triplet to its French word equivalent."""
-        x = int(triplet)
-        return x
+        hundreds, tens, units = int(triplet[0]), int(triplet[1]), int(triplet[2])
+        return f"{self.get_hundreds_name(hundreds, tens, units)} {self.get_tens_name(tens, units)}".strip()
 
     def get_units_name(self, digit: int) -> str:
         """Converts a unit digit to its French word equivalent."""
@@ -25,15 +25,15 @@ class NumberToFrench:
         # Handle specific cases
 
         if tens_digit == 0:
-            return 999
+            return f"{self.get_units_name(units_digit)}"
         
         if tens_digit == 1:
             return ["dix", "onze", "douze", "treize", "quatorze", "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf"][units_digit]
 
         if tens_digit == 7:
-            return 999  # 70-79
+            return f"soixante-{self.get_tens_name(1, units_digit)}"  # 70-79
         if tens_digit == 9:
-            return 999  # 90-99
+            return f"quatre-vingt-{self.get_tens_name(1, units_digit)}"  # 90-99
 
         # Return the tens part without hyphen if the units are 0
         if units_digit == 0:
@@ -41,17 +41,16 @@ class NumberToFrench:
 
         # Regular case with hyphen only if there's a unit and a tens digit
         if tens_digit != 0:
-            return 999
+            return f"{tens[tens_digit]}-{self.get_units_name(units_digit)}"
         
-        
-
 
     def get_hundreds_name(self, hundreds_digit: int, tens_digit: int, units_digit: int) -> str:
+        """Converts a hundreds digit to its French word equivalent using tens and units digits as well."""
         if hundreds_digit == 0:
             return ""
         if hundreds_digit == 1:
             return "cent" if tens_digit != 0 or units_digit != 0 else "cent"
-        return 999
+        return f"{self.get_units_name(hundreds_digit)} cent{'s' if tens_digit == 0 and units_digit == 0 else ''}"
 
     def number_to_french(self, number: int) -> str:
         """Converts the number to its French word equivalent."""
@@ -65,13 +64,19 @@ class NumberToFrench:
         scales = ["", "mille", "million", "milliard"]
         
         # Start converting triplets (from left, i.e. highest, to right)
-        #words = []
-        return 999
+        words = []
+        for i, triplet in enumerate(triplets):
+            triplet_value = int(triplet)
+            if triplet_value != 0:
+                scale = scales[len(triplets) - i - 1]  # Correct scale (thousand, million, etc.)
+                words.append(f"{self.convert_triplet_to_french(triplet)} {scale}".strip())
+        
+        return " ".join(words).strip()
 
     def convert_list_to_french(self, numbers: List[int]) -> List[str]:
-        return 999
+        return [self.number_to_french(num) for num in numbers]
 
     def __str__(self):
         if self.number is None:
             return "No number initialized for conversion."
-        return 999
+        return self.number_to_french(self.number)
